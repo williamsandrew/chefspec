@@ -417,6 +417,26 @@ the logging level when creating an instance of <code>ChefRunner</code> as below:
 <div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">reload_service</span> <span class="s1">'food'</span>
 </pre></div>
 
+<h1>Varying the cookbook path</h1>
+
+<p>By default chefspec will infer the <code>cookbook_path</code> from the location of the
+spec. However if you want to use a different path you can pass it in as an
+argument to the <code>ChefRunner</code> constructor like so:</p>
+
+<div class="highlight"><pre> <span class="mi">1</span> <span class="nb">require</span> <span class="s1">'chefspec'</span>
+ <span class="mi">2</span>
+ <span class="mi">3</span> <span class="n">describe</span> <span class="s1">'foo::default'</span> <span class="k">do</span>
+ <span class="mi">4</span>   <span class="n">let</span> <span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span>
+ <span class="mi">5</span>     <span class="n">runner</span> <span class="o">=</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span><span class="p">({</span><span class="ss">:cookbook_path</span> <span class="o">=&gt;</span> <span class="s1">'/some/path'</span><span class="p">})</span>
+ <span class="mi">6</span>     <span class="n">runner</span><span class="o">.</span><span class="n">converge</span> <span class="s1">'foo::default'</span>
+ <span class="mi">7</span>     <span class="n">runner</span>
+ <span class="mi">8</span>   <span class="p">}</span>
+ <span class="mi">9</span>   <span class="n">it</span> <span class="s1">'installs the foo package'</span> <span class="k">do</span>
+<span class="mi">10</span>     <span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">install_package</span> <span class="s1">'foo'</span>
+<span class="mi">11</span>   <span class="k">end</span>
+<span class="mi">12</span> <span class="k">end</span>
+</pre></div>
+
 <h1>Building</h1>
 
 <pre><code>$ bundle install
