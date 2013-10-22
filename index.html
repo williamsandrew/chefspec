@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Chefspec : Write RSpec examples for Opscode Chef cookbooks" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-    <title>Chefspec</title>
+    <title>Chefspec by sethvargo</title>
   </head>
 
   <body>
+    <header>
+      <div class="inner">
+        <h1>Chefspec</h1>
+        <h2>Write RSpec examples for Opscode Chef cookbooks</h2>
+        <a href="https://github.com/sethvargo/chefspec" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/acrmp/chefspec">View on GitHub</a>
-
-          <h1 id="project_title">Chefspec</h1>
-          <h2 id="project_tagline">Write RSpec examples for Opscode Chef cookbooks</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/acrmp/chefspec/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/acrmp/chefspec/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>Introduction</h1>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
 
 <p>ChefSpec makes it easy to write examples for Opscode Chef cookbooks. Get fast
 feedback on cookbook changes before you spin up a node to do integration
@@ -49,11 +47,12 @@ feedback on cookbook changes.</p>
 
 <p>Start by watching Jim Hopp's excellent <a href="http://www.youtube.com/watch?v=o2e0aZUAVGw">Test Driven Development for Chef Practitioners</a> talk from ChefConf which contains lots of great examples of using ChefSpec.</p>
 
-<h1>Writing a cookbook example</h1>
+<h1>
+<a name="writing-a-cookbook-example" class="anchor" href="#writing-a-cookbook-example"><span class="octicon octicon-link"></span></a>Writing a cookbook example</h1>
 
 <p>This is an extremely basic Chef recipe that just installs an operating system package.</p>
 
-<div class="highlight"><pre><span class="mi">1</span>  <span class="n">package</span> <span class="s2">"foo"</span> <span class="k">do</span>
+<div class="highlight highlight-ruby"><pre><span class="mi">1</span>  <span class="n">package</span> <span class="s2">"foo"</span> <span class="k">do</span>
 <span class="mi">2</span>    <span class="n">action</span> <span class="ss">:install</span>
 <span class="mi">3</span>  <span class="k">end</span>
 </pre></div>
@@ -61,10 +60,10 @@ feedback on cookbook changes.</p>
 <p>This is a matching spec file that defines an example that checks that the
 package would be installed.</p>
 
-<div class="highlight"><pre><span class="mi">1</span>  <span class="nb">require</span> <span class="s2">"chefspec"</span>
+<div class="highlight highlight-ruby"><pre><span class="mi">1</span>  <span class="nb">require</span> <span class="s2">"chefspec"</span>
 <span class="mi">2</span>
 <span class="mi">3</span>  <span class="n">describe</span> <span class="s2">"example::default"</span> <span class="k">do</span>
-<span class="mi">4</span>    <span class="n">let</span> <span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span> <span class="s1">'example::default'</span> <span class="p">}</span>
+<span class="mi">4</span>    <span class="n">let</span> <span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span> <span class="s1">'example::default'</span> <span class="p">}</span>
 <span class="mi">5</span>    <span class="n">it</span> <span class="s2">"should install foo"</span> <span class="k">do</span>
 <span class="mi">6</span>      <span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">install_package</span> <span class="s1">'foo'</span>
 <span class="mi">7</span>    <span class="k">end</span>
@@ -86,7 +85,8 @@ resources that were created during the mock converge.</li>
 <li>The <code>it</code> block on line 5 is an example that specifies that the <code>foo</code> package
 should have been installed. Normally you will have multiple <code>it</code> blocks per
 recipe, each making a single assertion.</li>
-</ol><h2>Generating an example</h2>
+</ol><h2>
+<a name="generating-an-example" class="anchor" href="#generating-an-example"><span class="octicon octicon-link"></span></a>Generating an example</h2>
 
 <p>Ideally you should be writing your specs in tandem with your recipes and
 practicising TDD. However if you have an existing cookbook and you are using
@@ -115,10 +115,10 @@ ChefSpec and will add a <code>specs</code> directory and a <code>default_spec.rb
 <pre><code>$ cat -n my_new_cookbook/spec/default_spec.rb
 </code></pre>
 
-<div class="highlight"><pre><span class="mi">1</span>  <span class="nb">require</span> <span class="s1">'chefspec'</span>
+<div class="highlight highlight-ruby"><pre><span class="mi">1</span>  <span class="nb">require</span> <span class="s1">'chefspec'</span>
 <span class="mi">2</span>
 <span class="mi">3</span>  <span class="n">describe</span> <span class="s1">'my_new_cookbook::default'</span> <span class="k">do</span>
-<span class="mi">4</span>    <span class="n">let</span> <span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span> <span class="s1">'my_new_cookbook::default'</span> <span class="p">}</span>
+<span class="mi">4</span>    <span class="n">let</span> <span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span> <span class="s1">'my_new_cookbook::default'</span> <span class="p">}</span>
 <span class="mi">5</span>    <span class="n">it</span> <span class="s1">'should do something'</span> <span class="k">do</span>
 <span class="mi">6</span>      <span class="n">pending</span> <span class="s1">'Your recipe examples go here.'</span>
 <span class="mi">7</span>    <span class="k">end</span>
@@ -141,7 +141,8 @@ Finished in 0.00051 seconds
 1 example, 0 failures, 1 pending
 </code></pre>
 
-<h1>Examples should do more than restate static resources</h1>
+<h1>
+<a name="examples-should-do-more-than-restate-static-resources" class="anchor" href="#examples-should-do-more-than-restate-static-resources"><span class="octicon octicon-link"></span></a>Examples should do more than restate static resources</h1>
 
 <p>Being able to write examples for simple cases like this is of some use, but
 because you declare resources in Chef declaratively it can feel like you are
@@ -163,7 +164,8 @@ for all of the variations with real converges can be incredibly time consuming.
 Doing this with real converges is prohibitively slow, but with ChefSpec you can
 identify regressions very quickly while developing your cookbook.</p>
 
-<h2>Setting node attributes</h2>
+<h2>
+<a name="setting-node-attributes" class="anchor" href="#setting-node-attributes"><span class="octicon octicon-link"></span></a>Setting node attributes</h2>
 
 <p>You can set node attributes within an individual example. In this example
 the value of the <code>foo</code> attribute will be set to <code>bar</code> on line 3. The example
@@ -171,8 +173,8 @@ then asserts that a resource is created based on the attribute name.
 In this example the affected resource is a log resource, but it could just as
 easily be a template or package name derived from an attribute value.</p>
 
-<div class="highlight"><pre><span class="mi">1</span>  <span class="n">it</span> <span class="s2">"should log the foo attribute"</span> <span class="k">do</span>
-<span class="mi">2</span>    <span class="n">chef_run</span> <span class="o">=</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span>
+<div class="highlight highlight-ruby"><pre><span class="mi">1</span>  <span class="n">it</span> <span class="s2">"should log the foo attribute"</span> <span class="k">do</span>
+<span class="mi">2</span>    <span class="n">chef_run</span> <span class="o">=</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span>
 <span class="mi">3</span>    <span class="n">chef_run</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="s1">'bar'</span>
 <span class="mi">4</span>    <span class="n">chef_run</span><span class="o">.</span><span class="n">converge</span> <span class="s1">'example::default'</span>
 <span class="mi">5</span>    <span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">log</span> <span class="s1">'The value of node.foo is: bar'</span>
@@ -182,9 +184,9 @@ easily be a template or package name derived from an attribute value.</p>
 <p>A common mistake is to call <code>#converge</code> on the runner before setting the node
 attributes. If you do this then the attributes will not be set correctly.</p>
 
-<div class="highlight"><pre><span class="mi">1</span>  <span class="c1"># Don't do this</span>
+<div class="highlight highlight-ruby"><pre><span class="mi">1</span>  <span class="c1"># Don't do this</span>
 <span class="mi">2</span>  <span class="n">it</span> <span class="s2">"should log the foo attribute"</span> <span class="k">do</span>
-<span class="mi">3</span>    <span class="n">chef_run</span> <span class="o">=</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span> <span class="s1">'example::default'</span>
+<span class="mi">3</span>    <span class="n">chef_run</span> <span class="o">=</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span> <span class="s1">'example::default'</span>
 <span class="mi">4</span>    <span class="n">chef_run</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="s1">'bar'</span>
 <span class="mi">5</span>    <span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">log</span> <span class="s1">'The value of node.foo is: bar'</span>
 <span class="mi">6</span>  <span class="k">end</span>
@@ -193,14 +195,15 @@ attributes. If you do this then the attributes will not be set correctly.</p>
 <p>To avoid this, you can make use of the alternative syntax for specifying node
 attributes. Using this approach you pass a block when creating the runner.</p>
 
-<div class="highlight"><pre><span class="mi">1</span>  <span class="n">chef_run</span> <span class="o">=</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
+<div class="highlight highlight-ruby"><pre><span class="mi">1</span>  <span class="n">chef_run</span> <span class="o">=</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
 <span class="mi">2</span>    <span class="n">node</span><span class="o">[</span><span class="s1">'my_attribute'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'bar'</span>
 <span class="mi">3</span>    <span class="n">node</span><span class="o">[</span><span class="s1">'my_other_attribute'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'bar2'</span>
 <span class="mi">4</span>  <span class="k">end</span>
 <span class="mi">5</span>  <span class="n">chef_run</span><span class="o">.</span><span class="n">converge</span> <span class="s1">'example::default'</span>
 </pre></div>
 
-<h2>Ohai Attributes</h2>
+<h2>
+<a name="ohai-attributes" class="anchor" href="#ohai-attributes"><span class="octicon octicon-link"></span></a>Ohai Attributes</h2>
 
 <p>When you converge a node using Chef a large number of attributes are
 pre-populated by Chef which runs
@@ -218,13 +221,14 @@ this way you can explore all of the code paths within your cookbook despite
 running the examples on a different platform altogether. Note that line 2
 declares the platform underneath <code>automatic_attrs</code>.</p>
 
-<div class="highlight"><pre><span class="mi">1</span>  <span class="n">chef_run</span> <span class="o">=</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span>
+<div class="highlight highlight-ruby"><pre><span class="mi">1</span>  <span class="n">chef_run</span> <span class="o">=</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span>
 <span class="mi">2</span>  <span class="n">chef_run</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">automatic_attrs</span><span class="o">[</span><span class="ss">:platform</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'Commodore 64'</span>
 <span class="mi">3</span>  <span class="n">chef_run</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="s1">'example::default'</span><span class="p">)</span><span class="o">.</span><span class="n">should</span> <span class="n">log</span>
 <span class="mi">4</span>    <span class="s1">'I am running on a Commodore 64.'</span>
 </pre></div>
 
-<h3>Missing attributes</h3>
+<h3>
+<a name="missing-attributes" class="anchor" href="#missing-attributes"><span class="octicon octicon-link"></span></a>Missing attributes</h3>
 
 <p>Because Ohai runs a large number of plugins by default, many community cookbooks
 will assume that a node attribute will be present, and will fail unless a value
@@ -238,7 +242,8 @@ individually. For more on Fauxhai
 <a href="http://technology.customink.com/blog/2012/08/03/testing-chef-cookbooks/">check out this blog post</a>
 from CustomInk.</p>
 
-<h2>Search Results</h2>
+<h2>
+<a name="search-results" class="anchor" href="#search-results"><span class="octicon octicon-link"></span></a>Search Results</h2>
 
 <p>Chef cookbooks will often make use of search in order to locate other services
 within your infrastructure. An example would be a load balancer that searches
@@ -247,7 +252,7 @@ for the webservers to add to its pool.</p>
 <p>You can use the built-in features within RSpec to stub out responses to search
 queries. Given a recipe that searches for webservers:</p>
 
-<div class="highlight"><pre><span class="mi">1</span>  <span class="n">search</span><span class="p">(</span><span class="ss">:node</span><span class="p">,</span> <span class="s1">'role:web'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">web_node</span><span class="o">|</span>
+<div class="highlight highlight-ruby"><pre><span class="mi">1</span>  <span class="n">search</span><span class="p">(</span><span class="ss">:node</span><span class="p">,</span> <span class="s1">'role:web'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">web_node</span><span class="o">|</span>
 <span class="mi">2</span>    <span class="n">log</span> <span class="s2">"Adding webserver to the pool: </span><span class="si">#{</span><span class="n">web_node</span><span class="o">[</span><span class="s1">'hostname'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
 <span class="mi">3</span>  <span class="k">end</span>
 </pre></div>
@@ -255,10 +260,10 @@ queries. Given a recipe that searches for webservers:</p>
 <p>A example that returned a pre-canned search result to the recipe and then
 asserted that it then logged each node added to the pool might look like this:</p>
 
-<div class="highlight"><pre><span class="mi">1</span>  <span class="n">it</span> <span class="s2">"should log each node added to the load balancer pool"</span> <span class="k">do</span>
-<span class="mi">2</span>    <span class="no">Chef</span><span class="o">::</span><span class="no">Recipe</span><span class="o">.</span><span class="n">any_instance</span><span class="o">.</span><span class="n">stub</span><span class="p">(</span><span class="ss">:search</span><span class="p">)</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="ss">:node</span><span class="p">,</span> <span class="s1">'role:web'</span><span class="p">)</span><span class="o">.</span><span class="n">and_yield</span><span class="p">(</span>
+<div class="highlight highlight-ruby"><pre><span class="mi">1</span>  <span class="n">it</span> <span class="s2">"should log each node added to the load balancer pool"</span> <span class="k">do</span>
+<span class="mi">2</span>    <span class="ss">Chef</span><span class="p">:</span><span class="ss">:Recipe</span><span class="o">.</span><span class="n">any_instance</span><span class="o">.</span><span class="n">stub</span><span class="p">(</span><span class="ss">:search</span><span class="p">)</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="ss">:node</span><span class="p">,</span> <span class="s1">'role:web'</span><span class="p">)</span><span class="o">.</span><span class="n">and_yield</span><span class="p">(</span>
 <span class="mi">3</span>      <span class="p">{</span><span class="s1">'hostname'</span> <span class="o">=&gt;</span> <span class="s1">'web1.example.com'</span><span class="p">})</span>
-<span class="mi">4</span>    <span class="n">chef_run</span> <span class="o">=</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span>
+<span class="mi">4</span>    <span class="n">chef_run</span> <span class="o">=</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span>
 <span class="mi">5</span>    <span class="n">chef_run</span><span class="o">.</span><span class="n">converge</span> <span class="s1">'my_new_cookbook::default'</span>
 <span class="mi">6</span>    <span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">log</span> <span class="s1">'Adding webserver to the pool: web1.example.com'</span>
 <span class="mi">7</span>  <span class="k">end</span>
@@ -268,7 +273,8 @@ asserted that it then logged each node added to the pool might look like this:</
 role. Line 6 then asserts that the hostname of the returned node is logged as
 expected.</p>
 
-<h1>Making Assertions</h1>
+<h1>
+<a name="making-assertions" class="anchor" href="#making-assertions"><span class="octicon octicon-link"></span></a>Making Assertions</h1>
 
 <p>Now you have a clear understanding of how to modify the attributes available to
 your cookbook it's time to explore the support available in ChefSpec for
@@ -278,7 +284,8 @@ expressing assertions.</p>
 An assertion is a statement about the resources created by your Chef run that
 the node will be converged against.</p>
 
-<h2>Files</h2>
+<h2>
+<a name="files" class="anchor" href="#files"><span class="octicon octicon-link"></span></a>Files</h2>
 
 <p>A basic form of assertion is to check that a file is created by a cookbook
 recipe. Note that this won't work for files or directories that are not
@@ -288,40 +295,41 @@ aware of resources that are defined within your cookbooks.</p>
 
 <p>Assert that a directory would be created:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">create_directory</span> <span class="s1">'/var/lib/foo'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">create_directory</span> <span class="s1">'/var/lib/foo'</span>
 </pre></div>
 
 <p>Assert that a directory would be deleted:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">delete_directory</span> <span class="s1">'/var/lib/foo'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">delete_directory</span> <span class="s1">'/var/lib/foo'</span>
 </pre></div>
 
 <p>Assert that a directory would have the correct ownership:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">directory</span><span class="p">(</span><span class="s1">'/var/lib/foo'</span><span class="p">)</span><span class="o">.</span><span class="n">should</span> <span class="n">be_owned_by</span><span class="p">(</span><span class="s1">'user'</span><span class="p">,</span> <span class="s1">'group'</span><span class="p">)</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">directory</span><span class="p">(</span><span class="s1">'/var/lib/foo'</span><span class="p">)</span><span class="o">.</span><span class="n">should</span> <span class="n">be_owned_by</span><span class="p">(</span><span class="s1">'user'</span><span class="p">,</span> <span class="s1">'group'</span><span class="p">)</span>
 </pre></div>
 
 <p>Assert that a file would be created:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">create_file</span> <span class="s1">'/var/log/bar.log'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">create_file</span> <span class="s1">'/var/log/bar.log'</span>
 </pre></div>
 
 <p>Assert that a file would be deleted:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">delete_file</span> <span class="s1">'/var/log/bar.log'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">delete_file</span> <span class="s1">'/var/log/bar.log'</span>
 </pre></div>
 
 <p>Assert that a file would have the correct ownership:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="s1">'/var/log/bar.log'</span><span class="p">)</span><span class="o">.</span><span class="n">should</span> <span class="n">be_owned_by</span><span class="p">(</span><span class="s1">'user'</span><span class="p">,</span> <span class="s1">'group'</span><span class="p">)</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="s1">'/var/log/bar.log'</span><span class="p">)</span><span class="o">.</span><span class="n">should</span> <span class="n">be_owned_by</span><span class="p">(</span><span class="s1">'user'</span><span class="p">,</span> <span class="s1">'group'</span><span class="p">)</span>
 </pre></div>
 
 <p>Assert that a file would have the expected content:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">create_file_with_content</span> <span class="s1">'hello-world.txt'</span><span class="p">,</span> <span class="s1">'hello world'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">create_file_with_content</span> <span class="s1">'hello-world.txt'</span><span class="p">,</span> <span class="s1">'hello world'</span>
 </pre></div>
 
-<h2>Packages</h2>
+<h2>
+<a name="packages" class="anchor" href="#packages"><span class="octicon octicon-link"></span></a>Packages</h2>
 
 <p>Note that only packages explicitly declared in the cookbook will be matched by
 these assertions. For example, a package installed only as a dependency of
@@ -329,35 +337,36 @@ another package would not be matched.</p>
 
 <p>Assert that a package would be installed:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">install_package</span> <span class="s1">'foo'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">install_package</span> <span class="s1">'foo'</span>
 </pre></div>
 
 <p>Assert that a package would be installed at a fixed version:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">install_package_at_version</span> <span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'1.2.3'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">install_package_at_version</span> <span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'1.2.3'</span>
 </pre></div>
 
 <p>Assert that a package would be removed:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">remove_package</span> <span class="s1">'foo'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">remove_package</span> <span class="s1">'foo'</span>
 </pre></div>
 
 <p>Assert that a package would be purged:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">purge_package</span> <span class="s1">'foo'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">purge_package</span> <span class="s1">'foo'</span>
 </pre></div>
 
 <p>Assert that a package would be upgraded:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">upgrade_package</span> <span class="s1">'foo'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">upgrade_package</span> <span class="s1">'foo'</span>
 </pre></div>
 
 <p>All of the assertions above are also valid for use with RubyGems:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">install_gem_package</span> <span class="s1">'foo'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">install_gem_package</span> <span class="s1">'foo'</span>
 </pre></div>
 
-<h2>Execute</h2>
+<h2>
+<a name="execute" class="anchor" href="#execute"><span class="octicon octicon-link"></span></a>Execute</h2>
 
 <p>If you make use of the <code>execute</code> resource within your cookbook recipes it is
 important to guard for idempotent behaviour. ChefSpec is not smart enough
@@ -366,68 +375,71 @@ be met however.</p>
 
 <p>Assert that a command would be run:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">execute_command</span> <span class="s1">'whoami'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">execute_command</span> <span class="s1">'whoami'</span>
 </pre></div>
 
 <p>Assert that a command would not be run:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should_not</span> <span class="n">execute_command</span> <span class="s1">'whoami'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should_not</span> <span class="n">execute_command</span> <span class="s1">'whoami'</span>
 </pre></div>
 
-<h2>Logging</h2>
+<h2>
+<a name="logging" class="anchor" href="#logging"><span class="octicon octicon-link"></span></a>Logging</h2>
 
 <p>You can assert that a log resource will be created. Note that this assertion
 will not match direct use of <code>Chef::Log</code>.</p>
 
 <p>Assert that a log statement would be logged:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">log</span> <span class="s1">'A log message from my recipe'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">log</span> <span class="s1">'A log message from my recipe'</span>
 </pre></div>
 
 <p>If you want to be able to view the log output at the console you can control
 the logging level when creating an instance of <code>ChefRunner</code> as below:</p>
 
-<div class="highlight"><pre><span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:log_level</span> <span class="o">=&gt;</span> <span class="ss">:debug</span><span class="p">)</span> <span class="p">}</span>
+<div class="highlight highlight-ruby"><pre><span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:log_level</span> <span class="o">=&gt;</span> <span class="ss">:debug</span><span class="p">)</span> <span class="p">}</span>
 </pre></div>
 
-<h2>Services</h2>
+<h2>
+<a name="services" class="anchor" href="#services"><span class="octicon octicon-link"></span></a>Services</h2>
 
 <p>Assert that a daemon would be started:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">start_service</span> <span class="s1">'food'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">start_service</span> <span class="s1">'food'</span>
 </pre></div>
 
 <p>Assert that a daemon would be started when the node boots:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">set_service_to_start_on_boot</span> <span class="s1">'food'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">set_service_to_start_on_boot</span> <span class="s1">'food'</span>
 </pre></div>
 
 <p>Assert that a daemon would be stopped:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">stop_service</span> <span class="s1">'food'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">stop_service</span> <span class="s1">'food'</span>
 </pre></div>
 
 <p>Assert that a daemon would be restarted:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">restart_service</span> <span class="s1">'food'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">restart_service</span> <span class="s1">'food'</span>
 </pre></div>
 
 <p>Assert that a daemon would be reloaded:</p>
 
-<div class="highlight"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">reload_service</span> <span class="s1">'food'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">chef_run</span><span class="o">.</span><span class="n">should</span> <span class="n">reload_service</span> <span class="s1">'food'</span>
 </pre></div>
 
-<h1>Varying the cookbook path</h1>
+<h1>
+<a name="varying-the-cookbook-path" class="anchor" href="#varying-the-cookbook-path"><span class="octicon octicon-link"></span></a>Varying the cookbook path</h1>
 
 <p>By default chefspec will infer the <code>cookbook_path</code> from the location of the
 spec. However if you want to use a different path you can pass it in as an
 argument to the <code>ChefRunner</code> constructor like so:</p>
 
-<div class="highlight"><pre> <span class="mi">1</span> <span class="nb">require</span> <span class="s1">'chefspec'</span>
+<div class="highlight highlight-ruby"><pre> <span class="mi">1</span> <span class="nb">require</span> <span class="s1">'chefspec'</span>
  <span class="mi">2</span>
  <span class="mi">3</span> <span class="n">describe</span> <span class="s1">'foo::default'</span> <span class="k">do</span>
  <span class="mi">4</span>   <span class="n">let</span> <span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span>
- <span class="mi">5</span>     <span class="n">runner</span> <span class="o">=</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span><span class="p">({</span><span class="ss">:cookbook_path</span> <span class="o">=&gt;</span> <span class="s1">'/some/path'</span><span class="p">})</span>
+ <span class="mi">5</span>     <span class="n">runner</span> <span class="o">=</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span><span class="p">({</span><span class="ss">:cookbook_path</span> <span class="o">=&gt;</span> <span class="s1">'/some/path'</span><span class="p">})</span>
  <span class="mi">6</span>     <span class="n">runner</span><span class="o">.</span><span class="n">converge</span> <span class="s1">'foo::default'</span>
  <span class="mi">7</span>     <span class="n">runner</span>
  <span class="mi">8</span>   <span class="p">}</span>
@@ -437,39 +449,51 @@ argument to the <code>ChefRunner</code> constructor like so:</p>
 <span class="mi">12</span> <span class="k">end</span>
 </pre></div>
 
-<h1>Building</h1>
+<h1>
+<a name="building" class="anchor" href="#building"><span class="octicon octicon-link"></span></a>Building</h1>
 
 <pre><code>$ bundle install
 $ bundle exec rake
 </code></pre>
 
-<h1>Continuous Integration</h1>
+<h1>
+<a name="continuous-integration" class="anchor" href="#continuous-integration"><span class="octicon octicon-link"></span></a>Continuous Integration</h1>
 
 <p><a href="http://travis-ci.org/acrmp/chefspec">Chefspec on Travis CI</a></p>
 
-<h1>License</h1>
+<h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
 
 <p>MIT - see the accompanying <a href="https://github.com/acrmp/chefspec/blob/master/LICENSE">LICENSE</a> file for details.</p>
 
-<h1>Changelog</h1>
+<h1>
+<a name="changelog" class="anchor" href="#changelog"><span class="octicon octicon-link"></span></a>Changelog</h1>
 
 <p>To see what has changed in recent versions see the <a href="https://github.com/acrmp/chefspec/blob/master/CHANGELOG.md">CHANGELOG</a>. ChefSpec follows the <a href="http://docs.rubygems.org/read/chapter/7">Rubygems RationalVersioningPolicy</a>.</p>
 
-<h1>Contributing</h1>
+<h1>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h1>
 
 <p>Additional matchers and bugfixes are welcome! Please fork and submit a pull request on an individual branch per change.</p>
-      </section>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/sethvargo/chefspec/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/sethvargo/chefspec/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/sethvargo/chefspec"></a> is maintained by <a href="https://github.com/sethvargo">sethvargo</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Chefspec maintained by <a href="https://github.com/acrmp">acrmp</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
+  
   </body>
 </html>
