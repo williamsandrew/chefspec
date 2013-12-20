@@ -1,34 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <title>Chefspec by sethvargo</title>
 
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
-    <title>Chefspec by sethvargo</title>
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Chefspec</h1>
-        <h2>Write RSpec examples for Opscode Chef cookbooks</h2>
-        <a href="https://github.com/sethvargo/chefspec" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Chefspec</h1>
+        <p class="header">Write RSpec examples for Opscode Chef cookbooks</p>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/sethvargo/chefspec/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/sethvargo/chefspec/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/sethvargo/chefspec">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/sethvargo">sethvargo</a></p>
+
+
+      </header>
+      <section>
+        <h1>
 <a name="chefspec" class="anchor" href="#chefspec"><span class="octicon octicon-link"></span></a>ChefSpec</h1>
 
 <p><a href="http://travis-ci.org/sethvargo/chefspec"><img src="https://secure.travis-ci.org/sethvargo/chefspec.png?branch=master" alt="Built on Travis"></a>
@@ -64,7 +66,7 @@
 <div class="highlight highlight-ruby"><pre><span class="nb">require</span> <span class="s1">'chefspec'</span>
 
 <span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span> <span class="p">}</span>
 
   <span class="n">it</span> <span class="s1">'installs foo'</span> <span class="k">do</span>
     <span class="n">expect</span><span class="p">(</span><span class="n">chef_run</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">install_package</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">)</span>
@@ -110,16 +112,16 @@
 <p>Values specified at the initalization of the <code>Runner</code> merge and take precedence over the global settings:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="c1"># Override only the operating system version (platform is still "ubuntu" from above)</span>
-<span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">version</span><span class="p">:</span> <span class="s1">'10.04'</span><span class="p">)</span>
+<span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">version</span><span class="p">:</span> <span class="s1">'10.04'</span><span class="p">)</span>
 
 <span class="c1"># Use a different operating system platform and version</span>
-<span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">platform</span><span class="p">:</span> <span class="s1">'centos'</span><span class="p">,</span> <span class="ss">version</span><span class="p">:</span> <span class="s1">'5.4'</span><span class="p">)</span>
+<span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">platform</span><span class="p">:</span> <span class="s1">'centos'</span><span class="p">,</span> <span class="ss">version</span><span class="p">:</span> <span class="s1">'5.4'</span><span class="p">)</span>
 
 <span class="c1"># Specify a different cookbook_path</span>
-<span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">cookbook_path</span><span class="p">:</span> <span class="s1">'/var/my/other/path'</span><span class="p">,</span> <span class="n">role_path</span><span class="p">:</span> <span class="s1">'/var/my/roles'</span><span class="p">)</span>
+<span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">cookbook_path</span><span class="p">:</span> <span class="s1">'/var/my/other/path'</span><span class="p">,</span> <span class="n">role_path</span><span class="p">:</span> <span class="s1">'/var/my/roles'</span><span class="p">)</span>
 
 <span class="c1"># Add debug log output</span>
-<span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">log_level</span><span class="p">:</span> <span class="ss">:debug</span><span class="p">)</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span>
+<span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">log_level</span><span class="p">:</span> <span class="ss">:debug</span><span class="p">)</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span>
 </pre></div>
 
 <p><strong>Note:</strong> You do not <em>need</em> to specify a platform and version. However, some cookbooks may rely on <a href="http://github.com/opscode/ohai">Ohai</a> data that ChefSpec cannot not automatically generate. Specifying the <code>platform</code> and <code>version</code> keys instructs ChefSpec to load stubbed Ohai attributes from another platform using <a href="https://github.com/customink/fauxhai">fauxhai</a>.</p>
@@ -153,7 +155,7 @@
 <div class="highlight highlight-ruby"><pre><span class="nb">require</span> <span class="s1">'chefspec'</span>
 
 <span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span> <span class="p">}</span>
 
   <span class="n">it</span> <span class="s1">'does something'</span> <span class="k">do</span>
     <span class="n">expect</span><span class="p">(</span><span class="n">chef_run</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="no">ACTION_RESOURCE</span><span class="p">(</span><span class="no">NAME</span><span class="p">)</span>
@@ -175,7 +177,7 @@
 <div class="highlight highlight-ruby"><pre><span class="nb">require</span> <span class="s1">'chefspec'</span>
 
 <span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span> <span class="p">}</span>
 
   <span class="n">it</span> <span class="s1">'does something'</span> <span class="k">do</span>
     <span class="n">expect</span><span class="p">(</span><span class="n">chef_run</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">install_package</span><span class="p">(</span><span class="s1">'apache2'</span><span class="p">)</span>
@@ -242,7 +244,7 @@
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
   <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="k">do</span>
-    <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
+    <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
       <span class="n">node</span><span class="o">.</span><span class="n">set</span><span class="o">[</span><span class="s1">'cookbook'</span><span class="o">][</span><span class="s1">'attribute'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'hello'</span>
     <span class="k">end</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span>
   <span class="k">end</span>
@@ -254,7 +256,7 @@
 <p>To set an attribute within a specific test, set the attribute in the <code>it</code> block and then <strong>(re-)converge the node</strong>:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span> <span class="c1"># Notice we don't converge here</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span> <span class="c1"># Notice we don't converge here</span>
 
   <span class="n">it</span> <span class="s1">'performs the action'</span> <span class="k">do</span>
     <span class="n">chef_run</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">set</span><span class="o">[</span><span class="s1">'cookbook'</span><span class="o">][</span><span class="s1">'attribute'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'hello'</span>
@@ -292,7 +294,7 @@ You can stub this command with:
 <p>Just like the error message says, you must stub the command result. This can be done inside a <code>before</code> block or inside the <code>it</code> block, and the stubbing method accepts both a value or Ruby code. If provided a value, the result is static. If provided a Ruby block, the block is evaluated each time the search is called.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_command</span><span class="p">(</span><span class="s2">"grep /tmp/foo.txt text"</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
@@ -301,7 +303,7 @@ You can stub this command with:
 </pre></div>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_command</span><span class="p">(</span><span class="s2">"grep /tmp/foo.txt text"</span><span class="p">)</span> <span class="p">{</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">}</span>
@@ -333,7 +335,7 @@ You can stub this data_bag with:
 <p>Just like the error message says, you must stub the result of the <code>data_bag</code> call. This can be done inside a <code>before</code> block or inside the <code>it</code> block, and the stubbing method accepts both a value or Ruby code. If provided a value, the result is static. If provided a Ruby block, the block is evaluated each time the search is called.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_data_bag</span><span class="p">(</span><span class="s1">'users'</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="o">[]</span><span class="p">)</span>
@@ -342,7 +344,7 @@ You can stub this data_bag with:
 </pre></div>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_data_bag</span><span class="p">(</span><span class="s1">'users'</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="o">[</span>
@@ -373,7 +375,7 @@ You can stub this search with:
 <p>Just like the error message says, you must stub the search result. This can be done inside a <code>before</code> block or inside the <code>it</code> block, and the stubbing method accepts both a value or Ruby code. If provided a value, the result is static. If provided a Ruby block, the block is evaluated each time the search is called.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_search</span><span class="p">(</span><span class="ss">:node</span><span class="p">,</span> <span class="s1">'name:hello'</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="o">[]</span><span class="p">)</span>
@@ -382,7 +384,7 @@ You can stub this search with:
 </pre></div>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_search</span><span class="p">(</span><span class="ss">:node</span><span class="p">,</span> <span class="s1">'name:hello'</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">ruby_code</span><span class="p">)</span> <span class="p">}</span>
@@ -396,16 +398,16 @@ You can stub this search with:
 <p>If you want to mock out <code>node.chef_environment</code>, you'll need to use RSpec mocks/stubs twice:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="k">do</span>
-  <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
+  <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
     <span class="c1"># Create a new environment (you could also use a different :let block or :before block)</span>
-    <span class="n">env</span> <span class="o">=</span> <span class="ss">Chef</span><span class="p">:</span><span class="ss">:Environment</span><span class="o">.</span><span class="n">new</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="no">Chef</span><span class="o">::</span><span class="no">Environment</span><span class="o">.</span><span class="n">new</span>
     <span class="n">env</span><span class="o">.</span><span class="n">name</span> <span class="s1">'staging'</span>
 
     <span class="c1"># Stub the node to return this environment</span>
     <span class="n">node</span><span class="o">.</span><span class="n">stub</span><span class="p">(</span><span class="ss">:chef_environment</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
     <span class="c1"># Stub any calls to Environment.load to return this environment</span>
-    <span class="ss">Chef</span><span class="p">:</span><span class="ss">:Environment</span><span class="o">.</span><span class="n">stub</span><span class="p">(</span><span class="ss">:load</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+    <span class="no">Chef</span><span class="o">::</span><span class="no">Environment</span><span class="o">.</span><span class="n">stub</span><span class="p">(</span><span class="ss">:load</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
   <span class="k">end</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="s1">'cookbook::recipe'</span><span class="p">)</span>
 <span class="k">end</span>
 </pre></div>
@@ -422,7 +424,7 @@ You can stub this search with:
 <div class="highlight highlight-ruby"><pre><span class="nb">require</span> <span class="s1">'chefspec'</span>
 
 <span class="n">describe</span> <span class="s1">'foo::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">step_into</span><span class="p">:</span> <span class="o">[</span><span class="s1">'my_lwrp'</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="s1">'foo::default'</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">step_into</span><span class="p">:</span> <span class="o">[</span><span class="s1">'my_lwrp'</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="s1">'foo::default'</span><span class="p">)</span> <span class="p">}</span>
 
   <span class="n">it</span> <span class="s1">'installs the foo package through my_lwrp'</span> <span class="k">do</span>
     <span class="n">expect</span><span class="p">(</span><span class="n">chef_run</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">install_package</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">)</span>
@@ -443,7 +445,7 @@ You can stub this search with:
 
 <span class="k">if</span> <span class="n">defined?</span><span class="p">(</span><span class="no">ChefSpec</span><span class="p">)</span>
   <span class="k">def</span> <span class="nf">my_custom_matcher</span><span class="p">(</span><span class="n">resource_name</span><span class="p">)</span>
-    <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Matchers</span><span class="o">::</span><span class="no">ResourceMatcher</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">)</span>
+    <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Matchers</span><span class="o">::</span><span class="no">ResourceMatcher</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </pre></div>
@@ -495,7 +497,7 @@ You can stub this search with:
 <div class="highlight highlight-ruby"><pre><span class="c1"># motd/libraries/matcher.rb</span>
 <span class="k">if</span> <span class="n">defined?</span><span class="p">(</span><span class="no">ChefSpec</span><span class="p">)</span>
   <span class="k">def</span> <span class="nf">write_motd_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Matchers</span><span class="o">::</span><span class="no">ResourceMatcher</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:motd_message</span><span class="p">,</span> <span class="ss">:write</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+    <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Matchers</span><span class="o">::</span><span class="no">ResourceMatcher</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:motd_message</span><span class="p">,</span> <span class="ss">:write</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </pre></div>
@@ -514,7 +516,7 @@ You can stub this search with:
 
 <div class="highlight highlight-ruby"><pre><span class="c1"># spec/support/matchers.rb</span>
 <span class="k">def</span> <span class="nf">my_custom_matcher</span><span class="p">(</span><span class="n">resource_name</span><span class="p">)</span>
-  <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Matchers</span><span class="o">::</span><span class="no">ResourceMatcher</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:resource</span><span class="p">,</span> <span class="ss">:action</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">)</span>
+  <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Matchers</span><span class="o">::</span><span class="no">ResourceMatcher</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:resource</span><span class="p">,</span> <span class="ss">:action</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">)</span>
 <span class="k">end</span>
 </pre></div>
 
@@ -550,7 +552,7 @@ Relevant File Content:
 
 <p>This output is automatically silenced when using RSpec's <code>raise_error</code> matcher:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="s1">'cookbook::recipe'</span><span class="p">)</span> <span class="p">}</span>
+<div class="highlight highlight-ruby"><pre><span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="s1">'cookbook::recipe'</span><span class="p">)</span> <span class="p">}</span>
 
 <span class="n">it</span> <span class="s1">'raises an error'</span> <span class="k">do</span>
   <span class="n">expect</span> <span class="p">{</span>
@@ -561,7 +563,7 @@ Relevant File Content:
 
 <p>You can also assert that a particular error was raised. If the error matches the given type, the output is suppressed. If not, the test fails and the entire stack trace is presented.</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="s1">'cookbook::recipe'</span><span class="p">)</span> <span class="p">}</span>
+<div class="highlight highlight-ruby"><pre><span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="s1">'cookbook::recipe'</span><span class="p">)</span> <span class="p">}</span>
 
 <span class="n">it</span> <span class="s1">'raises an error'</span> <span class="k">do</span>
   <span class="n">expect</span> <span class="p">{</span>
@@ -600,7 +602,7 @@ Relevant File Content:
 
 <p>You can test that the role is appropriately applied by telling the <code>ChefSpec::Runner</code> to converge on the <em>role</em> instead of a recipe:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="s1">'role[breakfast]'</span><span class="p">)</span> <span class="p">}</span>
+<div class="highlight highlight-ruby"><pre><span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="s1">'role[breakfast]'</span><span class="p">)</span> <span class="p">}</span>
 </pre></div>
 
 <p>Assert that the run_list is properly expanded:</p>
@@ -621,7 +623,7 @@ Relevant File Content:
 
 <span class="c1"># - OR -</span>
 
-<span class="ss">ChefSpec</span><span class="p">:</span><span class="ss">:Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">role_path</span><span class="p">:</span> <span class="s1">'/var/my/roles'</span><span class="p">)</span> <span class="c1"># local setting</span>
+<span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">role_path</span><span class="p">:</span> <span class="s1">'/var/my/roles'</span><span class="p">)</span> <span class="c1"># local setting</span>
 </pre></div>
 
 <h2>
@@ -634,7 +636,7 @@ Relevant File Content:
 <div class="highlight highlight-ruby"><pre><span class="nb">require</span> <span class="s1">'chefspec'</span>
 
 <span class="nb">require</span> <span class="s1">'chef_zero/server'</span>
-<span class="n">server</span> <span class="o">=</span> <span class="ss">ChefZero</span><span class="p">:</span><span class="ss">:Server</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">port</span><span class="p">:</span> <span class="mi">4000</span><span class="p">)</span>
+<span class="n">server</span> <span class="o">=</span> <span class="no">ChefZero</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">port</span><span class="p">:</span> <span class="mi">4000</span><span class="p">)</span>
 <span class="n">server</span><span class="o">.</span><span class="n">start_background</span>
 
 <span class="nb">at_exit</span> <span class="k">do</span>
@@ -670,10 +672,11 @@ Relevant File Content:
 </code></pre>
 </li>
 <li><p><strong>Write tests</strong></p></li>
-<li><p>Make your changes/patches/fixes, committing appropiately</p></li>
-<li><p>Run the tests: <code>bundle exec rake</code></p></li>
-<li><p>Push your changes to GitHub</p></li>
-<li><p>Open a Pull Request</p></li>
+<li>Make your changes/patches/fixes, committing appropiately</li>
+<li>Run the tests: <code>bundle exec rake</code>
+</li>
+<li>Push your changes to GitHub</li>
+<li>Open a Pull Request</li>
 </ol><p>ChefSpec is on <a href="http://travis-ci.org/sethvargo/chefspec">Travis CI</a> which tests against multiple Chef and Ruby versions.</p>
 
 <p>If you are contributing, please see the <a href="https://github.com/sethvargo/chefspec/blob/master/CONTRIBUTING.md">Contributing Guidelines</a> for more information.</p>
@@ -682,26 +685,13 @@ Relevant File Content:
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>MIT - see the accompanying <a href="https://github.com/sethvargo/chefspec/blob/master/LICENSE">LICENSE</a> file for details.</p>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/sethvargo/chefspec/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/sethvargo/chefspec/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/sethvargo/chefspec"></a> is maintained by <a href="https://github.com/sethvargo">sethvargo</a>.</p>
-
-          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
     </div>
-
-            <script type="text/javascript">
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		          <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
