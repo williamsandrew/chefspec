@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Chefspec by sethvargo</title>
+    <title>ChefSpec by sethvargo</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -16,7 +16,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1 class="header">Chefspec</h1>
+        <h1 class="header">ChefSpec</h1>
         <p class="header">Write RSpec examples for Opscode Chef cookbooks</p>
 
         <ul>
@@ -46,15 +46,37 @@
 <li>It's really fast!</li>
 <li>Your tests can vary node attributes, operating systems, and search results to assert behavior under varying conditions.</li>
 </ul><h2>
+<a name="what-people-are-saying" class="anchor" href="#what-people-are-saying"><span class="octicon octicon-link"></span></a>What people are saying</h2>
+
+<blockquote>
+<p>I just wanted to drop you a line to say "HELL YES!" to ChefSpec. - <a href="https://twitter.com/jgoggins">Joe Goggins</a></p>
+
+<p>OK chefspec is my new best friend. Delightful few hours working with it. - <a href="https://twitter.com/ivey">Michael Ivey</a></p>
+</blockquote>
+
+<p><strong>Chat with us - <a>#chefspec</a> on Freenode</strong></p>
+
+<h2>
 <a name="important-notes" class="anchor" href="#important-notes"><span class="octicon octicon-link"></span></a>Important Notes</h2>
 
 <ul>
-<li><strong>ChefSpec 3 requires Chef 11+! Please use the 2.x series for Chef 9 &amp; 10 compatability.</strong></li>
+<li><strong>ChefSpec 3 requires Chef 11+! Please use the 2.x series for Chef 9 &amp; 10 compatibility.</strong></li>
 <li><strong>This documentation corresponds to the master branch, which may be unreleased. Please check the README of the latest git tag or the gem's source for your version' documentation!</strong></li>
 <li><strong>Each resource matcher is self-documented using <a href="http://rubydoc.info/github/sethvargo/chefspec">Yard</a> and has a corresponding aruba test from the <a href="https://github.com/sethvargo/chefspec/tree/master/examples">examples directory</a>.</strong></li>
 <li><strong>ChefSpec 3.0 requires Ruby 1.9 or higher!</strong></li>
-</ul><h2>
+</ul><p>If you are migrating from ChefSpec v2.0.0, you should require the deprecations module after requiring <code>chefspec</code>:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="c1"># spec_helper.rb</span>
+<span class="nb">require</span> <span class="s1">'chefspec'</span>
+<span class="nb">require</span> <span class="s1">'chefspec/deprecations'</span>
+</pre></div>
+
+<p>After you have converted your specs, you can safely remove the deprecations module.</p>
+
+<h2>
 <a name="writing-a-cookbook-example" class="anchor" href="#writing-a-cookbook-example"><span class="octicon octicon-link"></span></a>Writing a Cookbook Example</h2>
+
+<p>If you want <code>knife</code> to automatically generate spec stubs for you, install <a href="https://github.com/sethvargo/knife-spec">knife-spec</a>.</p>
 
 <p>Given an extremely basic Chef recipe that just installs an operating system package:</p>
 
@@ -109,7 +131,7 @@
 <span class="k">end</span>
 </pre></div>
 
-<p>Values specified at the initalization of the <code>Runner</code> merge and take precedence over the global settings:</p>
+<p>Values specified at the initialization of the <code>Runner</code> merge and take precedence over the global settings:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="c1"># Override only the operating system version (platform is still "ubuntu" from above)</span>
 <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">version</span><span class="p">:</span> <span class="s1">'10.04'</span><span class="p">)</span>
@@ -124,7 +146,7 @@
 <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">log_level</span><span class="p">:</span> <span class="ss">:debug</span><span class="p">)</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span>
 </pre></div>
 
-<p><strong>Note:</strong> You do not <em>need</em> to specify a platform and version. However, some cookbooks may rely on <a href="http://github.com/opscode/ohai">Ohai</a> data that ChefSpec cannot not automatically generate. Specifying the <code>platform</code> and <code>version</code> keys instructs ChefSpec to load stubbed Ohai attributes from another platform using <a href="https://github.com/customink/fauxhai">fauxhai</a>.</p>
+<p><strong>NOTE</strong> You do not <em>need</em> to specify a platform and version. However, some cookbooks may rely on <a href="http://github.com/opscode/ohai">Ohai</a> data that ChefSpec cannot not automatically generate. Specifying the <code>platform</code> and <code>version</code> keys instructs ChefSpec to load stubbed Ohai attributes from another platform using <a href="https://github.com/customink/fauxhai">fauxhai</a>.</p>
 
 <h3>
 <a name="berkshelf" class="anchor" href="#berkshelf"><span class="octicon octicon-link"></span></a>Berkshelf</h3>
@@ -145,7 +167,42 @@
 </ul><h3>
 <a name="librarian" class="anchor" href="#librarian"><span class="octicon octicon-link"></span></a>Librarian</h3>
 
-<p><em>There is not currently librarian integration, but we would welcome a community patch!</em></p>
+<p>If you are using Librarian, simply require <code>chefspec/librarian</code> in your <code>spec_helper</code> after requiring <code>chefspec</code>:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="c1"># spec_helper.rb</span>
+<span class="nb">require</span> <span class="s1">'chefspec'</span>
+<span class="nb">require</span> <span class="s1">'chefspec/librarian'</span>
+</pre></div>
+
+<p>Requiring this file will:</p>
+
+<ul>
+<li>Create a temporary working directory</li>
+<li>Download all the dependencies listed in your <code>Cheffile</code> into the temporary directory</li>
+<li>Set ChefSpec's <code>cookbook_path</code> to the temporary directory</li>
+</ul><p><strong>NOTE</strong> In order to test the cookbook in the current working directory, you
+have to write your <code>Cheffile</code> like this:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="c1"># Cheffile</span>
+<span class="n">site</span> <span class="s1">'http://community.opscode.com/api/v1'</span>
+
+<span class="n">cookbook</span> <span class="s1">'name_of_your_cookbook'</span><span class="p">,</span> <span class="ss">path</span><span class="p">:</span> <span class="s1">'.'</span>
+</pre></div>
+
+<h2>
+<a name="running-specs" class="anchor" href="#running-specs"><span class="octicon octicon-link"></span></a>Running Specs</h2>
+
+<p>ChefSpec is actually a very large RSpec extension, so you can run your tests using the RSpec CLI:</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>rspec
+</pre></div>
+
+<p>You can also specify a specific spec to run and various RSpec command line options:</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>rspec spec/unit/recipes/default_spec.rb --color
+</pre></div>
+
+<p>For more information on the RSpec CLI, please see the <a href="https://relishapp.com/rspec/rspec-core/docs/command-line">documentation</a>.</p>
 
 <h2>
 <a name="making-assertions" class="anchor" href="#making-assertions"><span class="octicon octicon-link"></span></a>Making Assertions</h2>
@@ -218,7 +275,7 @@
 <span class="n">expect</span><span class="p">(</span><span class="n">chef_run</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">render_file</span><span class="p">(</span><span class="s1">'/etc/foo'</span><span class="p">)</span><span class="o">.</span><span class="n">with_content</span><span class="p">(</span><span class="sr">/regex works too.+/</span><span class="p">)</span>
 </pre></div>
 
-<p>Additionally, it is possible to assert which <a href="http://docs.opscode.com/essentials_nodes_chef_run.html">Chef phase of execution</a> a resouce is created. Given a resource that is installed at compile time using <code>run_action</code>:</p>
+<p>Additionally, it is possible to assert which <a href="http://docs.opscode.com/essentials_nodes_chef_run.html">Chef phase of execution</a> a resource is created. Given a resource that is installed at compile time using <code>run_action</code>:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">package</span><span class="p">(</span><span class="s1">'apache2'</span><span class="p">)</span><span class="o">.</span><span class="n">run_action</span><span class="p">(</span><span class="ss">:install</span><span class="p">)</span>
 </pre></div>
@@ -228,7 +285,7 @@
 <div class="highlight highlight-ruby"><pre><span class="n">expect</span><span class="p">(</span><span class="n">chef_run</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">install_package</span><span class="p">(</span><span class="s1">'apache2'</span><span class="p">)</span><span class="o">.</span><span class="n">at_compile_time</span>
 </pre></div>
 
-<p>Simiarly, you can assert that a resource is executed during convergence time:</p>
+<p>Similarly, you can assert that a resource is executed during convergence time:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">expect</span><span class="p">(</span><span class="n">chef_run</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">install_package</span><span class="p">(</span><span class="s1">'apache2'</span><span class="p">)</span><span class="o">.</span><span class="n">at_converge_time</span>
 </pre></div>
@@ -244,7 +301,7 @@
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
   <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="k">do</span>
-    <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
+    <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
       <span class="n">node</span><span class="o">.</span><span class="n">set</span><span class="o">[</span><span class="s1">'cookbook'</span><span class="o">][</span><span class="s1">'attribute'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'hello'</span>
     <span class="k">end</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span>
   <span class="k">end</span>
@@ -256,7 +313,7 @@
 <p>To set an attribute within a specific test, set the attribute in the <code>it</code> block and then <strong>(re-)converge the node</strong>:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span> <span class="c1"># Notice we don't converge here</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span> <span class="c1"># Notice we don't converge here</span>
 
   <span class="n">it</span> <span class="s1">'performs the action'</span> <span class="k">do</span>
     <span class="n">chef_run</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">set</span><span class="o">[</span><span class="s1">'cookbook'</span><span class="o">][</span><span class="s1">'attribute'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'hello'</span>
@@ -266,6 +323,59 @@
   <span class="k">end</span>
 <span class="k">end</span>
 </pre></div>
+
+<h2>
+<a name="using-chef-zero" class="anchor" href="#using-chef-zero"><span class="octicon octicon-link"></span></a>Using Chef Zero</h2>
+
+<p>By default, ChefSpec runs in Chef Solo mode. As of ChefSpec v3.1.0, you can ask ChefSpec to create an in-memory Chef Server during testing using <a href="https://github.com/jkeiser/chef-zero">ChefZero</a>. This is especially helpful if you need to support searching or data bags.</p>
+
+<p>To use the ChefSpec server, simply require the module in your <code>spec_helper</code>:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="c1"># spec_helper.rb</span>
+<span class="nb">require</span> <span class="s1">'chefspec'</span>
+<span class="nb">require</span> <span class="s1">'chefspec/server'</span>
+</pre></div>
+
+<p>This will automatically create a Chef server, synchronize all the cookbooks in your <code>cookbook_path</code>, and wire all the internals of Chef together. Recipe calls to <code>search</code>, <code>data_bag</code> and <code>data_bag_item</code> will now query the ChefSpec server.</p>
+
+<h3>
+<a name="dsl" class="anchor" href="#dsl"><span class="octicon octicon-link"></span></a>DSL</h3>
+
+<p>The ChefSpec server includes a collection of helpful DSL methods for populating data into the Chef Server.</p>
+
+<p>Create a client:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">ChefSpec</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">create_client</span><span class="p">(</span><span class="s1">'my_client'</span><span class="p">,</span> <span class="p">{</span> <span class="ss">admin</span><span class="p">:</span> <span class="kp">true</span> <span class="p">})</span>
+</pre></div>
+
+<p>Create a data bag (and items):</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">ChefSpec</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">create_data_bag</span><span class="p">(</span><span class="s1">'my_data_bag'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="s1">'item_1'</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="s1">'abc123'</span>
+  <span class="p">},</span>
+  <span class="s1">'item_2'</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="s1">'def456'</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+
+<p>Create an environment:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">ChefSpec</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">create_environment</span><span class="p">(</span><span class="s1">'my_environment'</span><span class="p">,</span> <span class="p">{</span> <span class="ss">description</span><span class="p">:</span> <span class="s1">'...'</span> <span class="p">})</span>
+</pre></div>
+
+<p>Create a node:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">ChefSpec</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">create_node</span><span class="p">(</span><span class="s1">'my_node'</span><span class="p">,</span> <span class="p">{</span> <span class="n">run_list</span><span class="p">:</span> <span class="o">[</span><span class="s1">'...'</span><span class="o">]</span> <span class="p">})</span>
+</pre></div>
+
+<p>Create a role:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">ChefSpec</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">create_role</span><span class="p">(</span><span class="s1">'my_role'</span><span class="p">,</span> <span class="p">{</span> <span class="n">default_attributes</span><span class="p">:</span> <span class="p">{}</span> <span class="p">})</span>
+</pre></div>
+
+<p><strong>NOTE</strong> The ChefSpec server is empty at the start of each example to avoid interdependent tests. You can use <code>before</code> blocks to load data before each test.</p>
 
 <h2>
 <a name="stubbing" class="anchor" href="#stubbing"><span class="octicon octicon-link"></span></a>Stubbing</h2>
@@ -294,7 +404,7 @@ You can stub this command with:
 <p>Just like the error message says, you must stub the command result. This can be done inside a <code>before</code> block or inside the <code>it</code> block, and the stubbing method accepts both a value or Ruby code. If provided a value, the result is static. If provided a Ruby block, the block is evaluated each time the search is called.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_command</span><span class="p">(</span><span class="s2">"grep /tmp/foo.txt text"</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
@@ -303,7 +413,7 @@ You can stub this command with:
 </pre></div>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_command</span><span class="p">(</span><span class="s2">"grep /tmp/foo.txt text"</span><span class="p">)</span> <span class="p">{</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">}</span>
@@ -313,6 +423,8 @@ You can stub this command with:
 
 <h3>
 <a name="data-bag--data-bag-item" class="anchor" href="#data-bag--data-bag-item"><span class="octicon octicon-link"></span></a>Data Bag &amp; Data Bag Item</h3>
+
+<p><strong>NOTE</strong> This is not required if you are using a ChefSpec server.</p>
 
 <p>Given a recipe that executes a <code>data_bag</code> method:</p>
 
@@ -335,7 +447,7 @@ You can stub this data_bag with:
 <p>Just like the error message says, you must stub the result of the <code>data_bag</code> call. This can be done inside a <code>before</code> block or inside the <code>it</code> block, and the stubbing method accepts both a value or Ruby code. If provided a value, the result is static. If provided a Ruby block, the block is evaluated each time the search is called.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_data_bag</span><span class="p">(</span><span class="s1">'users'</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="o">[]</span><span class="p">)</span>
@@ -344,7 +456,7 @@ You can stub this data_bag with:
 </pre></div>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_data_bag</span><span class="p">(</span><span class="s1">'users'</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="o">[</span>
@@ -361,6 +473,8 @@ You can stub this data_bag with:
 <h3>
 <a name="search" class="anchor" href="#search"><span class="octicon octicon-link"></span></a>Search</h3>
 
+<p><strong>NOTE</strong> This is not required if you are using a ChefSpec server.</p>
+
 <p>Because ChecSpec is a unit-testing framework, it is recommended that all third-party API calls be mocked or stubbed. ChefSpec exposes a helpful RSpec macro for stubbing search results in your tests. If you converge a Chef recipe that implements a <code>search</code> call, ChefSpec will throw an error like:</p>
 
 <div class="highlight highlight-text"><pre>Real searches are disabled. Unregistered search: search(:node, 'name:hello')
@@ -375,7 +489,7 @@ You can stub this search with:
 <p>Just like the error message says, you must stub the search result. This can be done inside a <code>before</code> block or inside the <code>it</code> block, and the stubbing method accepts both a value or Ruby code. If provided a value, the result is static. If provided a Ruby block, the block is evaluated each time the search is called.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_search</span><span class="p">(</span><span class="ss">:node</span><span class="p">,</span> <span class="s1">'name:hello'</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="o">[]</span><span class="p">)</span>
@@ -384,12 +498,50 @@ You can stub this search with:
 </pre></div>
 
 <div class="highlight highlight-ruby"><pre><span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
 
   <span class="n">before</span> <span class="k">do</span>
     <span class="n">stub_search</span><span class="p">(</span><span class="ss">:node</span><span class="p">,</span> <span class="s1">'name:hello'</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">ruby_code</span><span class="p">)</span> <span class="p">}</span>
   <span class="k">end</span>
 <span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="reporting" class="anchor" href="#reporting"><span class="octicon octicon-link"></span></a>Reporting</h2>
+
+<p>ChefSpec attempts to generate a report of resources read over resources tested. Please note, this feature is currently in beta phases and may not be 100% accurate. That being said, it's currently the only code coverage tool available for Chef recipes.</p>
+
+<p>To generate the coverage report, add the following the the <strong>very end</strong> of your <code>spec_helper.rb</code>:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="c1"># Existing things...</span>
+
+<span class="nb">at_exit</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Coverage</span><span class="o">.</span><span class="n">report!</span> <span class="p">}</span>
+</pre></div>
+
+<p>By default, that method will output helpful information to standard out:</p>
+
+<div class="highlight highlight-text"><pre>ChefSpec Coverage report generated at '.coverage/results.json':
+
+  Total Resources:   6
+  Touched Resources: 1
+  Touch Coverage:    16.67%
+
+Untouched Resources:
+
+  package[git]: bacon/recipes/default.rb:2
+  package[build-essential]: bacon/recipes/default.rb:3
+  package[apache2]: bacon/recipes/default.rb:4
+  package[libvrt]: bacon/recipes/default.rb:5
+  package[core]: bacon/recipes/default.rb:6
+</pre></div>
+
+<p>It also outputs a machine-parsable JSON file at <code>.coverage/results.json</code>. This file can be read by your CI server to determine changes in code coverage. We recommend adding the <code>.coverage</code> directory to your <code>.gitignore</code> to avoid committing it to git.</p>
+
+<p>You can configure both the announcing behavior and JSON file. Please see the YARD documentaion for more information.</p>
+
+<p>If you want to restrict coverage reporting only against certain cookbook directories, you can do it using filters. For example, to include only the site-cookbooks directory for coverage reporting, add the following line in your <code>spec/spec_helper.rb</code></p>
+
+<div class="highlight highlight-ruby"><pre> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Coverage</span><span class="o">.</span><span class="n">filters</span> <span class="o">&lt;&lt;</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="s1">'../../site-cookbooks'</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">)</span>
 </pre></div>
 
 <h2>
@@ -417,6 +569,8 @@ You can stub this search with:
 <h2>
 <a name="testing-lwrps" class="anchor" href="#testing-lwrps"><span class="octicon octicon-link"></span></a>Testing LWRPs</h2>
 
+<p><strong>WARNING</strong> Cookbooks with dashes (hyphens) are difficult to test with ChefSpec because of how Chef classifies objects. We recommend naming cookbooks with underscores (<code>_</code>) instead of dashes (<code>-</code>).</p>
+
 <p>ChefSpec overrides all providers to take no action (otherwise it would actually converge your system). This means that the steps inside your LWRP are not actually executed. If an LWRP performs actions, those actions are never executed or added to the resource collection.</p>
 
 <p>In order to run the actions exposed by your LWRP, you have to explicitly tell the <code>Runner</code> to step into it:</p>
@@ -431,8 +585,6 @@ You can stub this search with:
   <span class="k">end</span>
 <span class="k">end</span>
 </pre></div>
-
-<p><strong>Please read the caveats on custom LWRPs in the wiki before testing your LWRPs!</strong></p>
 
 <p><strong>You should never <code>step_into</code> an LWRP unless you are testing it. Never <code>step_into</code> an LWRP from another cookbook!</strong></p>
 
@@ -512,7 +664,7 @@ You can stub this search with:
 <h2>
 <a name="writing-custom-matchers" class="anchor" href="#writing-custom-matchers"><span class="octicon octicon-link"></span></a>Writing Custom Matchers</h2>
 
-<p>If you are testing a cookbook that does not package it's LWRP matchers, you can create your own following the same pattern as above. Create a file at <code>spec/support/matchers.rb</code> and add your resource matchers:</p>
+<p>If you are testing a cookbook that does not package it's LWRP matchers, you can create your own following the same pattern as the "Packaging Custom Matchers" section. Simply, create a file at <code>spec/support/matchers.rb</code> and add your resource matchers:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="c1"># spec/support/matchers.rb</span>
 <span class="k">def</span> <span class="nf">my_custom_matcher</span><span class="p">(</span><span class="n">resource_name</span><span class="p">)</span>
@@ -520,12 +672,17 @@ You can stub this search with:
 <span class="k">end</span>
 </pre></div>
 
+<p>Then require this file in your <code>spec_helper.rb</code> so the matcher can be used:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">require_relative</span> <span class="s1">'support/matchers'</span>
+</pre></div>
+
 <p>Please use this as a <em>temporary</em> solution. Consider sending a Pull Request to the LWRP author(s) packaging the custom resource matchers (see previous section).</p>
 
 <h2>
 <a name="expecting-exceptions" class="anchor" href="#expecting-exceptions"><span class="octicon octicon-link"></span></a>Expecting Exceptions</h2>
 
-<p>In Chef 11, custom formatters were introduced and ChefSpec uses a custom formatter to supress Chef Client output. In the event of a convergence failure, ChefSpec will output the error message from the run to help you debug:</p>
+<p>In Chef 11, custom formatters were introduced and ChefSpec uses a custom formatter to suppress Chef Client output. In the event of a convergence failure, ChefSpec will output the error message from the run to help you debug:</p>
 
 <div class="highlight highlight-text"><pre>================================================================================
 Recipe Compile Error in apt_package/recipes/install.rb
@@ -615,7 +772,7 @@ Relevant File Content:
 <div class="highlight highlight-ruby"><pre><span class="n">expect</span><span class="p">(</span><span class="n">runner</span><span class="o">.</span><span class="n">node</span><span class="o">[</span><span class="s1">'bacon'</span><span class="o">][</span><span class="s1">'temperature'</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
 </pre></div>
 
-<p><strong>NOTE:</strong> If your roles live somewhere outside of the expected path, you must set <code>RSpec.config.role_path</code> to point to the directory containing your roles <strong>before</strong> invoking the <code>#converge</code> method!</p>
+<p><strong>NOTE</strong> If your roles live somewhere outside of the expected path, you must set <code>RSpec.config.role_path</code> to point to the directory containing your roles <strong>before</strong> invoking the <code>#converge</code> method!</p>
 
 <div class="highlight highlight-ruby"><pre><span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="n">config</span><span class="o">.</span><span class="n">role_path</span> <span class="o">=</span> <span class="s1">'/var/my/roles'</span> <span class="c1"># global setting</span>
@@ -627,33 +784,38 @@ Relevant File Content:
 </pre></div>
 
 <h2>
-<a name="using-chef-zero" class="anchor" href="#using-chef-zero"><span class="octicon octicon-link"></span></a>Using Chef Zero</h2>
+<a name="faster-specs" class="anchor" href="#faster-specs"><span class="octicon octicon-link"></span></a>Faster Specs</h2>
 
-<p><strong>Warning:</strong> This is not an officially supported pathway at this time. Please use at your own risk:</p>
+<p>ChefSpec aims to provide the easiest and simplest path for new users to write RSpec examples for Chef cookbooks. In doing so, it makes some sacrifies in terms of speed and agility of execution. In other words, ChefSpec favors "speed to develop" over "speed to execute". Many of these decisions are directly related to the way Chef dynamically loads resources at runtime.</p>
 
-<p><a href="https://github.com/jkeiser/chef-zero">ChefZero</a> is an in-memory chef server from Jon Keiser. With ChefZero you can completely bypass the search and data bag stubbing requirements, as now it provides a full Chef Server in memory. You should <em>only</em> create one instance of a Chef Zero server, so it's best to do so in your <code>spec_helper.rb</code>:</p>
+<p>If you understand how RSpec works and would like to see some significant speed improvements in your specs, you can use the <code>ChefSpec::Cacher</code> module inspired by <a href="https://github.com/DracoAter">Juri Timošin</a>. Just require the cacher module in your spec helper.</p>
 
-<div class="highlight highlight-ruby"><pre><span class="nb">require</span> <span class="s1">'chefspec'</span>
-
-<span class="nb">require</span> <span class="s1">'chef_zero/server'</span>
-<span class="n">server</span> <span class="o">=</span> <span class="no">ChefZero</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">port</span><span class="p">:</span> <span class="mi">4000</span><span class="p">)</span>
-<span class="n">server</span><span class="o">.</span><span class="n">start_background</span>
-
-<span class="nb">at_exit</span> <span class="k">do</span>
-  <span class="n">server</span><span class="o">.</span><span class="n">stop</span> <span class="k">if</span> <span class="n">server</span><span class="o">.</span><span class="n">running?</span>
-<span class="k">end</span>
-
+<div class="highlight highlight-ruby"><pre><span class="c1"># spec_helper.rb</span>
+<span class="nb">require</span> <span class="s1">'chefspec/cacher'</span>
 </pre></div>
 
-<p>You can also populate pre-baked node data (for example all the nodes from staging environment) which in turn will dictate the outcome of your <code>search</code> calls. This will be slower than the first two methods and also requires more memory. See the <a href="https://github.com/jkeiser/chef-zero">ChefZero</a> documentation for more details.</p>
+<p>Next, convert all your <code>let</code> blocks to <code>cached</code>:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="c1"># before</span>
+<span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runer</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+
+<span class="c1"># after</span>
+<span class="n">cached</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+</pre></div>
+
+<p>Everything else should work the same. Be advised, as the method name suggests, this will cache the results of your Chef Client Run for the <strong>entire RSpec example</strong>. This makes stubbing more of a challenge, since the node is already converged. For more information, please see <a href="http://dracoater.blogspot.com/2013/12/testing-chef-cookbooks-part-25-speeding.html">Juri Timošin's blog post on faster specs</a> as well as the discussion in <a href="https://github.com/sethvargo/chefspec/issues/275">#275</a>.</p>
 
 <h2>
-<a name="videos" class="anchor" href="#videos"><span class="octicon octicon-link"></span></a>Videos</h2>
+<a name="media--third-party-tutorials" class="anchor" href="#media--third-party-tutorials"><span class="octicon octicon-link"></span></a>Media &amp; Third-party Tutorials</h2>
 
 <ul>
-<li>Jim Hopp's excellent <a href="http://www.youtube.com/watch?v=o2e0aZUAVGw">Test Driven Development for Chef Practitioners</a>
-</li>
-<li>Seth Vargo's <a href="http://www.confreaks.com/videos/2364-mwrc2013-tdding-tmux">TDDing tmux talk</a> Using ChefSpec with Guard.</li>
+<li><a href="http://technology.customink.com/blog/2012/08/03/testing-chef-cookbooks/">CustomInk's Testing Chef Cookbooks</a></li>
+<li><a href="http://files.meetup.com/1780846/ChefSpec.pdf">Jake Vanderdray's Practical ChefSpec</a></li>
+<li><a href="http://www.youtube.com/watch?v=o2e0aZUAVGw">Jim Hopp's excellent Test Driven Development for Chef Practitioners</a></li>
+<li><a href="http://jtimberman.housepub.org/blog/2013/05/09/starting-chefspec-example/">Joshua Timberman's Starting ChefSpec Examples</a></li>
+<li><a href="http://dracoater.blogspot.com/2013/12/testing-chef-cookbooks-part-25-speeding.html">Juri Timošin's post on faster specs</a></li>
+<li><a href="http://www.confreaks.com/videos/2364-mwrc2013-tdding-tmux">Seth Vargo's TDDing tmux talk</a></li>
+<li><a href="http://shop.oreilly.com/product/0636920030973.do">Stephen Nelson Smith's Test-Driven Infrastructure with Chef</a></li>
 </ul><h2>
 <a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h2>
 
@@ -672,7 +834,7 @@ Relevant File Content:
 </code></pre>
 </li>
 <li><p><strong>Write tests</strong></p></li>
-<li>Make your changes/patches/fixes, committing appropiately</li>
+<li>Make your changes/patches/fixes, committing appropriately</li>
 <li>Run the tests: <code>bundle exec rake</code>
 </li>
 <li>Push your changes to GitHub</li>
