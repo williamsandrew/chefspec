@@ -370,9 +370,25 @@ have to write your <code>Cheffile</code> like this:</p>
 <div class="highlight highlight-ruby"><pre><span class="no">ChefSpec</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">create_node</span><span class="p">(</span><span class="s1">'my_node'</span><span class="p">,</span> <span class="p">{</span> <span class="n">run_list</span><span class="p">:</span> <span class="o">[</span><span class="s1">'...'</span><span class="o">]</span> <span class="p">})</span>
 </pre></div>
 
+<p>You may also be interested in the <code>stub_node</code> macro, which will create a new <code>Chef::Node</code> object and accepts the same parameters as the Chef Runner and a Fauxhai object:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">www</span> <span class="o">=</span> <span class="n">stub_node</span><span class="p">(</span><span class="ss">platform</span><span class="p">:</span> <span class="s1">'ubuntu'</span><span class="p">,</span> <span class="ss">version</span><span class="p">:</span> <span class="s1">'12.04'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
+        <span class="n">node</span><span class="o">[</span><span class="s1">'fqdn'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'www1.example.com'</span>
+      <span class="k">end</span>
+
+<span class="c1"># `www` is now a local Chef::Node object you can use in your test. To push this</span>
+<span class="c1"># node to the server, call `create_node`:</span>
+
+<span class="no">ChefSpec</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">create_node</span><span class="p">(</span><span class="s1">'www'</span><span class="p">,</span> <span class="n">www</span><span class="p">)</span>
+</pre></div>
+
 <p>Create a role:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="no">ChefSpec</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">create_role</span><span class="p">(</span><span class="s1">'my_role'</span><span class="p">,</span> <span class="p">{</span> <span class="n">default_attributes</span><span class="p">:</span> <span class="p">{}</span> <span class="p">})</span>
+
+<span class="c1"># The role now exists on the Chef Server, you can add it to a node's run_list</span>
+<span class="c1"># by adding it to the `converge` block:</span>
+<span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">,</span> <span class="s1">'role[my_role]'</span><span class="p">)</span> <span class="p">}</span>
 </pre></div>
 
 <p><strong>NOTE</strong> The ChefSpec server is empty at the start of each example to avoid interdependent tests. You can use <code>before</code> blocks to load data before each test.</p>
@@ -586,7 +602,7 @@ Untouched Resources:
 <span class="k">end</span>
 </pre></div>
 
-<p><strong>You should never <code>step_into</code> an LWRP unless you are testing it. Never <code>step_into</code> an LWRP from another cookbook!</strong></p>
+<p><strong>NOTE:</strong> If your cookbook exposes LWRPs, it is highly recommended you also create a <code>libraries/matchers.rb</code> file as outlined below in the "Packaging Custom Matchers" section. <strong>You should never <code>step_into</code> an LWRP unless you are testing it. Never <code>step_into</code> an LWRP from another cookbook!</strong></p>
 
 <h2>
 <a name="packaging-custom-matchers" class="anchor" href="#packaging-custom-matchers"><span class="octicon octicon-link"></span></a>Packaging Custom Matchers</h2>
@@ -644,9 +660,9 @@ Untouched Resources:
 <div class="highlight highlight-ruby"><pre><span class="n">motd_message</span> <span class="s1">'my message'</span>
 </pre></div>
 
-<p>You can package a custom ChefSpec matcher with the motd cookbook by including the following code in <code>libraries/matcher.rb</code>:</p>
+<p>You can package a custom ChefSpec matcher with the motd cookbook by including the following code in <code>libraries/matchers.rb</code>:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="c1"># motd/libraries/matcher.rb</span>
+<div class="highlight highlight-ruby"><pre><span class="c1"># motd/libraries/matchers.rb</span>
 <span class="k">if</span> <span class="n">defined?</span><span class="p">(</span><span class="no">ChefSpec</span><span class="p">)</span>
   <span class="k">def</span> <span class="nf">write_motd_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
     <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Matchers</span><span class="o">::</span><span class="no">ResourceMatcher</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:motd_message</span><span class="p">,</span> <span class="ss">:write</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
@@ -814,6 +830,7 @@ Relevant File Content:
 <li><a href="http://www.youtube.com/watch?v=o2e0aZUAVGw">Jim Hopp's excellent Test Driven Development for Chef Practitioners</a></li>
 <li><a href="http://jtimberman.housepub.org/blog/2013/05/09/starting-chefspec-example/">Joshua Timberman's Starting ChefSpec Examples</a></li>
 <li><a href="http://dracoater.blogspot.com/2013/12/testing-chef-cookbooks-part-25-speeding.html">Juri Timošin's post on faster specs</a></li>
+<li><a href="https://sethvargo.com/chef-recipe-code-coverage/">Seth Vargo's Chef recipe code coverage</a></li>
 <li><a href="http://www.confreaks.com/videos/2364-mwrc2013-tdding-tmux">Seth Vargo's TDDing tmux talk</a></li>
 <li><a href="http://shop.oreilly.com/product/0636920030973.do">Stephen Nelson Smith's Test-Driven Infrastructure with Chef</a></li>
 </ul><h2>
