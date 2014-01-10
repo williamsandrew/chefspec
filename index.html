@@ -244,6 +244,21 @@ have to write your <code>Cheffile</code> like this:</p>
 
 <p>This test is asserting that the Chef run will have a <em>package</em> resource with the name <em>apache2</em> with an action of <em>install</em>.</p>
 
+<p>To test that a resource action is performed with a specific set of attributes, you can call <code>with(ATTRIBUTES_HASH)</code> on the expectation, per the following example:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="nb">require</span> <span class="s1">'chefspec'</span>
+
+<span class="n">describe</span> <span class="s1">'example::default'</span> <span class="k">do</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">)</span> <span class="p">{</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">Runner</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">converge</span><span class="p">(</span><span class="n">described_recipe</span><span class="p">)</span> <span class="p">}</span>
+
+  <span class="n">it</span> <span class="s1">'does something'</span> <span class="k">do</span>
+    <span class="n">expect</span><span class="p">(</span><span class="n">chef_run</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">modify_group</span><span class="p">(</span><span class="s1">'docker'</span><span class="p">)</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="ss">members</span><span class="p">:</span> <span class="o">[</span><span class="s1">'vagrant'</span><span class="o">]</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>This test is asserting that the Chef run will have a <em>group</em> resource with the name <em>docker</em>, an action of <em>modify</em>, and an attributes hash including <code>{ members: ['vagrant'] }</code>.</p>
+
 <p>ChefSpec includes matchers for all of Chef's core resources using the above schema. Each resource matcher is self-documented using <a href="http://rubydoc.info/github/sethvargo/chefspec">Yard</a> and has a corresponding cucumber test from the <a href="https://github.com/sethvargo/chefspec/tree/master/examples">examples directory</a>.</p>
 
 <p>Additionally, ChefSpec includes the following helpful matchers. They are also <a href="http://rubydoc.info/github/sethvargo/chefspec">documented in Yard</a>, but they are included here because they do not follow the "general pattern".</p>
@@ -491,7 +506,7 @@ You can stub this data_bag with:
 
 <p><strong>NOTE</strong> This is not required if you are using a ChefSpec server.</p>
 
-<p>Because ChecSpec is a unit-testing framework, it is recommended that all third-party API calls be mocked or stubbed. ChefSpec exposes a helpful RSpec macro for stubbing search results in your tests. If you converge a Chef recipe that implements a <code>search</code> call, ChefSpec will throw an error like:</p>
+<p>Because ChefSpec is a unit-testing framework, it is recommended that all third-party API calls be mocked or stubbed. ChefSpec exposes a helpful RSpec macro for stubbing search results in your tests. If you converge a Chef recipe that implements a <code>search</code> call, ChefSpec will throw an error like:</p>
 
 <div class="highlight highlight-text"><pre>Real searches are disabled. Unregistered search: search(:node, 'name:hello')
 
