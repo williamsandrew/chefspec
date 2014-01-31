@@ -77,6 +77,32 @@ module ChefSpec::Matchers
       end
     end
 
+    def failure_message_for_should_not
+      if @resource
+        message = %Q{did not expect "#{resource_name(@resource)}[#{@resource.name}]" to notify "#{@expected_resource_type}[#{@expected_resource_name}]"}
+        message << " with action :#{@action}" if @action
+        message << " immediately" if @immediately
+        message << " delayed" if @delayed
+        message << ", but did."
+        message << "\n\n"
+        message << "Other notifications were:\n\n#{format_notifications}"
+        message << "\n "
+        message
+      else
+        message = %Q{did not expect _something_ to notify "#{@expected_resource_type}[#{@expected_resource_name}]"}
+        message << " with action :#{@action}" if @action
+        message << " immediately" if @immediately
+        message << " delayed" if @delayed
+        message << ", but the _something_ you gave me was nil! If you are running a test like:"
+        message << "\n\n"
+        message << "  expect(_something_).to_not notify('...')"
+        message << "\n\n"
+        message << "Make sure that `_something_` exists, because I got nil"
+        message << "\n "
+        message
+      end
+    end
+
     private
       def all_notifications
         immediate_notifications + delayed_notifications
